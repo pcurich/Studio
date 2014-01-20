@@ -1,0 +1,113 @@
+﻿@using Studio.Models.Transaccional.Modelo
+@{
+    ViewBag.Title = "Acerca de";
+}
+@model Studio.Models.Transaccional.Modelo.Album
+
+@Html.DropDownListFor(model => model.Title, new SelectList(ViewBag.Albums), "Seleciona Album")
+<div id="rData"></div>
+@*@section Scripts {
+    <script type="text/jscript">
+        $('#Title').click(function () {
+            $.getJSON('/Home/AlbumsList/' + $('#Title').val(), function (data) {
+                var items = '<table><tr><th>Artist</th><th>Title</th><th>Price</th></tr>';
+                $.each(data, function (i, Album) {
+                    items += "<tr><td>" + Album.Artist.Name + "</td><td>" + Album.Title + "</td><td>" + Album.Price + "</td></tr>";
+                });
+                items += "</table>";
+                $('#rData').html(items);
+            });
+        })
+    </script>
+}*@
+
+<h2>Subscription</h2>
+
+<p>
+    Ingresa el nombre
+    <br />
+    @Html.TextBox("Name")
+</p>
+<p>
+    Ingresa Direccion
+    <br />
+    @Html.TextBox("Address")
+</p>
+
+<input type="button" value="Save" id="Save" />
+
+<script type="text/javascript">
+    $('#Save').click(function () {
+        var url = "/Home/SubmitSubscription";
+        var name = $("#Name").val();
+        var address = $("#Address").val();
+        $.post(url, { Name: name, Address: address }, function (data) {
+            $("#msg").html(data);
+        });
+    })
+</script>
+
+@section Scripts{
+    <script type="text/javascript">
+        $('#Registrar').click(function () {
+
+            var form = $("#subscriptionForm");
+            var url = form.attr("action");
+            alert(url);
+            var formData = form.serialize();
+            alert(formData);
+            $.post(url, formData, function (data) {
+                $("#result").html(data);
+            });
+        })
+    </script>
+}
+<form class="form-horizontal" id="subscriptionForm" role="form" action="/Home/About" method="post">
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Genero</label>
+        <div class="col-lg-10">
+            @Html.DropDownListFor(model => model.Genre.Name, new SelectList(ViewBag.Genre), "Seleciona un genero")
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Artista</label>
+        <div class="col-lg-10">
+            @Html.DropDownListFor(model => model.Artist.Name, new SelectList(ViewBag.Artist), "Seleciona Artista")
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Titulo</label>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model=>model.Title) 
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Precio</label>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model=>model.Price) 
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">URL</label>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model=>model.AlbumArtUrl) 
+        </div>
+    </div>
+    <button type="submit" class="btn btn-default" id="Registrar">Registrar</button>
+</form>
+<span id="result" style="color:red;"/>
+
+<script type="text/javascript">
+    $.validator.unobtrusive.adapters.addSingleVal("maxwords", "wordcount");
+    //name of the adapter (ValidationProperty value  you set on the server-side rule, the name of the single parameter to retrieve from metadata
+
+    //$.validator.addMethod("maxwords", function (value, element, maxwords) {
+    //    if (value) {
+    //        if (value.split(' ').length > maxwords) {
+    //            return false;
+    //        }
+    //    }
+    //    return true;
+    //});
+
+</script>

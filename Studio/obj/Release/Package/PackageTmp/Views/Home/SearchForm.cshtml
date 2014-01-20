@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "SearchForm";
+}
+
+<h2>SearchForm OLD</h2>
+
+@using (Ajax.BeginForm("ArtistSearch", "Home",
+new AjaxOptions
+{
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "GET",
+    OnFailure = "searchFailed",
+    LoadingElementId = "ajax-loader1",
+    UpdateTargetId = "searchresults",
+}))
+{
+    <input type="text" name="q" data-autocomplete-source="@Url.Action("QuickSearch", "Home")" />
+    <input type="submit" value="search" />
+    <img id="ajax-loader1" src="~/Images/loader.gif" style="display:none"/>
+}
+
+<div id="searchresults"></div>
+
+<script id="artistTemplate" type="text/html">
+    <ul>
+    {{#artists}}
+        <li>{{Name}} :D </li>
+    {{/artists}}
+    </ul>
+</script>
+
+<h2>SearchForm NEW</h2>
+
+<form id="artistSearch" method="get" action="@Url.Action("ArtistSearchNEW", "Home")">
+    <input type="text" name="q" data-autocomplete-source="@Url.Action("QuickSearch", "Home")" />
+    <input type="submit" value="search" />
+    <img id="ajax-loader2" src="~/Images/loader.gif" style="display:none"/>
+</form>
+
+<script type="text/javascript">
+
+    $("#artistSearch").submit(function (event) {
+        event.preventDefault();
+        var form = $(this);
+        $.ajax({
+            url: form.attr("action"),
+            data: form.serialize(),
+            beforeSend: function () { $("#ajax-loader").show(); },
+            complete: function () { $("#ajax-loader").hide(); },
+            error: function () {
+                var txt = "Error en la entrega del mensaje";
+                $("#searchresults").empty().append(txt);
+            },
+            success: function (data) {
+                var html = Mustache.to_html($("#artistTemplate").html(), { artists: data });
+                $("#searchresults").empty().append(html);
+            }
+        });
+        $.getJSON(form.attr("action"), form.serialize(), function (data) {
+            var html = Mustache.to_html($("#artistTemplate").html(), { artists: data });
+            $("#searchresults").empty().append(html);
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    $("input[data-autocomplete-source]").each(function () {
+        var target = $(this);
+        target.autocomplete({
+            source: target.attr("data-autocomplete-source"),
+            messages: {
+                noResults: '',
+                results: function () { }
+            }
+
+        });
+    });
+    </script>

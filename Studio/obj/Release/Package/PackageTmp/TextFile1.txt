@@ -1,0 +1,7 @@
+﻿Update-Package
+Install-Package log4net Studio 2.0.3
+Install-Package HtmlTags
+TEMAS
+http://visualstudiogallery.msdn.microsoft.com/366ad100-0003-4c9a-81a8-337d4e7ace05
+
+http://visualstudiogallery.msdn.microsoft.com/07d54d12-7133-4e15-becb-6f451ea3bea6

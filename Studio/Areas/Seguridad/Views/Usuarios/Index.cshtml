@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <h3 class="page-title">User Profile <small>user profile sample</small></h3>
+        <ul class="page-breadcrumb breadcrumb">
+            <li><i class="fa fa-home"></i><a href="index.html">Home</a><i class="fa fa-angle-right"></i></li>
+            <li><a href="#">Extra</a><i class="fa fa-angle-right"></i></li>
+            <li><a href="#">User Profile</a></li>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        //$(document).ready(function () {
+        //    $("#jsUser").jstree({
+        //        'json_data': {
+        //            'ajax': {
+        //                'type': 'GET',
+        //                'dataType': 'json',
+        //                'contentType': 'application/json',
+        //                'url': 'Usuarios/GetUsuarios',
+        //                'data': function (node) {
+        //                    return { 'id' : node.id};
+        //                },
+        //                'success': function (retval) {
+        //                    return retval.d;
+        //                },
+        //            }
+        //        },
+        //        plugins: ["themes", "json_data"]
+        //    });
+        //});
+
+        //$(function () {
+        //    $('#jsUser').jstree({
+        //        'core': {
+        //            'dataType':'json',
+        //            'data': {
+        //                'url': '/Usuarios/GetUsuarios',
+        //                'data': function (node) {
+        //                    return { 'id': node.id, 'parent': node.parent, 'text': node.text, 'children': false };
+        //                }
+        //            }
+        //        }
+        //    });
+        //});
+
+        $(document).ready(function () {
+            $("#jsUser").jstree({
+                "json_data": {
+                    "ajax": {
+                        "type": "GET",
+                        "dataType": "json",
+                        "contentType": "application/json;",
+                        "url": "../../Seguridad/Usuarios/GetUsuarios",
+                        "data": function (node) {
+                            return {
+                                "operation": "get_children",
+                                "id": node.attr ? node.attr("id").replace("node_", "") : 1  
+                            };
+                        },
+                        "success": function (retval) {
+                            return retval.d;
+                        }
+                    }
+                },
+                contextmenu: {
+                    items: function ($node) {
+                        return {
+                            createItem: {
+                                "label": "Agregar",
+                                "action": function (obj) { this.create(obj); alert(obj.text()) },
+                                "_class": "class"
+                            },
+                            renameItem: {
+                                "label": "Actualizar",
+                                "action": function (obj) { this.rename(obj); }
+                            },
+                            deleteItem: {
+                                "label": "Eliminar",
+                                "action": function (obj) { this.remove(obj); }
+                            }
+                        };
+                    }
+                },
+                "plugins": [
+			            "themes", "json_data", "ui", "crrm", "cookies", "dnd", "search", "types", "hotkeys", "contextmenu"
+                ],
+            });
+        });
+
+    </script>
+}
+<div class="row">
+    <div class="col-md-12">
+        <div id="jsUser" class="col-md-3" ></div>
+        <div class="col-md-9"></div>
+    </div>
+</div>

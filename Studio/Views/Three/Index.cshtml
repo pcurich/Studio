@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@model Studio.Models.Seguridad.Modelo.Location
+<h2>Index</h2>
+
+ countryCode  @Model.countryCode <br />
+ countryName @Model.countryName  <br />
+ regionName @Model.regionName <br />
+ cityName @Model.cityName <br />
+ zipCode @Model.zipCode <br />
+ latitude @Model.latitude <br />
+ longitude  @Model.longitude <br />
+ timeZone @Model.timeZone <br />
+
+@section Scripts{
+    <script type="text/javascript">
+        //$('#jstree').jstree();
+        $("#jstree").jstree();
+        //$('#jstree').jstree({
+        //    "core": {
+        //        "theme": {
+        //            "variant": "large"
+        //        },
+        //        "multiple": true,
+        //        "animation": 0
+        //    },
+        //    "checkbox": {
+        //        "keep_selected_style": false
+        //    },
+        //    "plugins": ["wholerow", "checkbox"]
+        //});
+        $('#jstree').on("changed.jstree", function (e, data) {
+            console.log(data.selected);
+        });
+        $('button').on('click', function () {
+            $('#jstree').jstree(true).select_node('child_node_1');
+            $('#jstree').jstree('select_node', 'child_node_1');
+            $.jstree.reference('#jstree').select_node('child_node_1');
+        });
+    </script>
+}
+<div id="jstree">
+    <!-- in this example the tree is populated from inline HTML -->
+    <img src="~/Content/Three/UserGroup.png" />
+    <ul>
+      <li data-jstree='{"icon":"glyphicon glyphicon-user"}'>Root node 1
+        <ul>
+          <li id="child_node_1">Child node 1</li>
+          <li>Child node 2</li>
+          <li>Child node 3</li>
+          <li>Child node 4</li>
+          <li>Child node 5</li>
+        </ul>
+      </li>
+      <li>Root node 2</li>
+    </ul>
+  </div>
+  <button>demo button</button>

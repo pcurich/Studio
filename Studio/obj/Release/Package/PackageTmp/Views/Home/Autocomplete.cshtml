@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Autocomplete";
+}
+
+<h2>Autocomplete</h2>
+@section Scripts{
+    
+    <script type="text/javascript">
+        $("input[data-autocomplete-source]").each(function () {
+            var target = $(this);
+            target.autocomplete({
+                source: target.attr("data-autocomplete-source"),
+                messages: {
+                    noResults: '',
+                    results: function () { }
+                }
+
+            });
+        });
+    </script>
+}
+
+<form>
+<input type="text" id="search" />
+<input  name="q" aria-haspopup="true" aria-autocomplete="list" role="textbox" autocomplete="off"  data-autocomplete-source="@Url.Action("QuickSearch", "Home")" />
+</form>
+
+

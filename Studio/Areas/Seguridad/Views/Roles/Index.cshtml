@@ -1,0 +1,208 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+    
+    <link rel="stylesheet" type="text/css" href="~/Assets/Plugins/Jstree/dist/themes/default/style.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Assets/bootstrap/css/bootstrap-switch.css"/>
+    <script type="text/javascript" src="~/Assets/Plugins/Jstree/dist/jstree.min.js"></script>
+
+    <script type="text/javascript" src="~/Assets/bootstrap/js/bootstrap-switch.js"></script>
+    <script type="text/javascript" src="~/Assets/bootstrap/js/switch.js"></script>
+
+@*    <script type="text/javascript" src="~/Assets/Plugins/DataTable/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Assets/Plugins/DataTable/js/jquery.dataTables.editable"></script>
+    <script type="text/javascript" src="~/Assets/Plugins/DataTable/js/jquery.jeditable"></script>
+    <script type="text/javascript" src="~/Assets/Plugins/DataTable/js/jquery.validate"></script>*@
+    
+@*    <link rel="stylesheet" type="text/css" href="~/Assets/Plugins/DataTable/css/dataTables.css" />*@
+    <script type="text/javascript">
+        @*$(document).ready(function () {
+
+            $('#myDataTable').dataTable({
+                "bServerSide": true,
+                "sAjaxSource": "AjaxHandle",
+                "bProcessing": true,
+                "aoColumns": [
+                                {
+                                    "sName": "ID",
+                                    "bSearchable": false,
+                                    "bSortable": false,
+                                    "fnRender": function (oObj) {
+                                        return '<a href=\"Details/' +
+                                        oObj.aData[0] + '\">View</a>';
+                                    }
+                                },
+                                { "sName": "COMPANY_NAME" },
+                                { "sName": "ADDRESS" },
+                                { "sName": "TOWN" }
+                ]
+            }).makeEditable(true);
+        });*@
+    </script>
+}
+
+<h2>Index</h2>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#tree').jstree({
+            "core": {
+                "animation": 0,
+                "check_callback": true,
+                "themes": { "stripes": true },
+                'data': {
+                    'url': function (node) {
+                        return node.id === '#' ?
+                          '/Seguridad/Roles/GetUsuarios' : '/Seguridad/Roles/GetUsuarios';
+                    },
+                    'data': function (node) {
+                        return { 'id': node.id };
+                    }
+                }
+            },
+            "types": {
+                "#": {
+                    "max_children": 1,
+                    "max_depth": 4,
+                    "valid_children": ["root"]
+                },
+                "default": {
+                    "valid_children": ["default", "file"]
+                },
+                "file": {
+                    "icon": "glyphicon glyphicon-file",
+                    "valid_children": []
+                }
+            },
+            "plugins": [
+              "contextmenu", "dnd", "search",
+              "state", "types", "wholerow"
+            ]
+        }).bind("select_node.jstree", function (e, data) {
+            var id = data.node.id;
+
+            $.ajax({
+                type: "GET",
+                url: "/Seguridad/Roles/GetUsuario",
+                data: { id: id },
+                dataType: "json",
+                cache: true,
+                success: function (data) {
+                    $('#UserName').val(data.UserName)
+                    $('#Password').val(data.Password)
+                }
+            });
+
+            //alert(id);
+
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("li").click(
+        function () {
+            alert(this);
+            //$.ajax({
+            //    url: 'calificar.php',
+            //    type: 'get',
+            //    data: { id: jQuery(this).attr("id") },
+            //    success: function (output) {
+            //        location.reload();
+            //    }, error: function () {
+            //        alert('Error');
+            //    }
+            //});
+        });
+    });
+</script>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="tree" class="col-md-3">
+        </div>
+        <div class="col-md-9">
+            <div class="row" id="Access">
+                <div class="col-md-12">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="glyphicons glyphicons-group"></i>Datos del Usuario
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <form action="#" class="form-horizontal form-bordered">
+                                <div class="form-body">
+                                    <div class="form-group">
+                                        <div class="col-md-9">
+                                            <div class="row">
+                                                <div class="form-inline">
+                                                    <label class="col-lg-4 control-label">Email</label>
+                                                    <div class="col-lg-8">
+                                                        <input type="text" id="UserName" class="form-control"  placeholder="UserName" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-inline">
+                                                    <label class="col-lg-4 control-label">Password</label>
+                                                    <div class="col-lg-8">
+                                                        <input type="password" id="Password" class="form-control" placeholder="Password" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-inline">
+                                                    <label class="col-lg-4 control-label">Active</label>
+                                                    <div class="col-lg-8">
+                                                        <div class="has-switch" tabindex="0">
+                                                            <div class="switch-on" style="">
+                                                                <input id="Cambia" type="checkbox" checked="" class="switch-small" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <script type="text/javascript">
+                                                $('#Cambia').on('switch-change', function (e, data) {
+                                                    var $element = $(data.el),
+                                                        value = data.value;
+                                                    alert("s");
+                                                    $.ajax({
+                                                        url: 'GetUsuarios/1',
+                                                        beforeSend: function () { alert("before") },
+                                                        success: function () {
+                                                            alert("Success");
+                                                        },
+                                                        error: alert("error")
+                                                    });
+                                                });
+                                            </script>
+                                            <div class="row" id="result"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+@*            <div class="row" id="licence">
+                <div class="col-md-12">
+                    <table id="myDataTable" class="display">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Company name</th>
+                                <th>Address</th>
+                                <th>Town</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>*@
+        </div>
+    </div>
+</div>

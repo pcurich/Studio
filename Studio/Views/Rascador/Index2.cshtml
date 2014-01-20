@@ -1,0 +1,99 @@
+﻿@section Scripts{
+    <script type="text/javascript">
+        $("#Search").submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr("action"),
+                data: form.serialize(),
+                beforeSend: function () { $("#ajax-loader").show(); },
+                complete: function () { $("#ajax-loader").hide(); },
+                error: function () {
+                    var txt = "Error en la entrega del mensaje";
+                    $("#Result").empty().append(txt);
+                },
+                success: function (data) {
+                    var html = Mustache.to_html($("#ResultTemplate").html(), { albums: data });
+                    $("#Result").show();
+                    $("#Result").empty().append(html);
+                }
+            });
+            });
+    </script>
+
+    <script type="text/javascript">
+        //130
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+                $("#ajax-loader").show();
+                $.ajax({
+                    url: "GetAlbumsScroll" + "?q=" + $("*[name=q]").val() + "&id=" + $("*[class^='row']:last").attr("Id"),
+                    beforeSend: function () {
+                        var medida = 150 + $("#Result").height();
+                        //$("#Result").css({ "height": medida + "px" });
+                        
+                    },
+                    success: function (data) {
+                        if (data) {
+                            var html = Mustache.to_html($("#ResultTemplate").html(), { albums: data });
+                            $("#Result").append(html);
+                            $("#ajax-loader").hide();
+                        } else {
+                            alert("error" + html);
+                        }
+                    },
+                    error: function () {
+                        $("#ajax-loader").hide();
+                },
+                });
+            }
+        })
+    </script>
+}
+
+<div class="page-content inset">
+    <div class="row well">
+        <h4>Buscar</h4>
+        <form id="Search" method="get"  class="form-horizontal" role="form" action="@Url.Action("GetAlbumsForm", "Rascador")">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Buscar" name="q" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" ><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+            </div>
+        </form>
+    </div>
+
+
+    <script id="ResultTemplate" type="text/html">
+        {{#albums}}
+        <div class="row" id="{{Id}}">
+            <div class="col-md-2">
+                <div class="img-responsive">
+                    <img class="img-circle" alt="200x200" src="{{AlbumArtUrl}}" height="85" width="85" />
+                </div>
+            </div>
+            <div class="col-md-7">
+                <button type="button" class="btn btn-lg btn-link" data-toggle="modal" data-target="#myModal">{{Title}}</button>
+                <p>{{Title}}</p>
+            </div>
+            <div class="col-md-3">
+                <div class="pull-right">
+                    BUY <strong>DOWNLOAD</strong>
+                    <p class="text-center" style="font-size:25px"><strong>S/ {{Price}}</strong></p>
+                    <button type="button" class="btn btn-danger">Add To Card</button>
+                </div>
+            </div>
+        </div>
+        <hr />
+        {{/albums}}
+    </script>
+
+
+    <div Id="Result" class="row well well-sm" style="height: auto; overflow-y: hidden; display:none; overflow-x: hidden;">
+    </div>
+
+    <div id="ajax-loader" style="display:none">
+        <img src="~/Images/loader.gif" class="img img-responsive" style="display:block; margin:auto; " />
+    </div>
+</div>

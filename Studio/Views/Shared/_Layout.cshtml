@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewBag.Title - Mi aplicación ASP.NET MVC</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="~/Assets/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Assets/bootstrap/css/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="~/Assets/bootstrap/css/style.css" />
+
+    <script type="text/javascript" src="~/Assets/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="~/Assets/Jquery/jquery-1.10.2.js"></script>
+
+@*    @Scripts.Render("~/bundles/glyphicons")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/Mustaje")
+    <!--JQuery Fallback-->
+    <script>window.jQuery || document.write('<script src="/Scripts/jquery-2.0.3.min.js">x3C/script>')</script>
+    @Styles.Render("~/bundles/bootstrapcss")
+    @Scripts.Render("~/bundles/bootstrapjs")
+    @Scripts.Render("~/bundles/Plugin")*@
+
+    @*<link rel="stylesheet" type="text/css" href="~/Assets/Plugins/switch/cs/bootstrap-switch.css" />*@
+    @*<script type="text/javascript" src="~/Assets/Plugins/switch/js/bootstrap-switch.js"></script>
+    <script type="text/javascript" src="~/Assets/Plugins/switch/js/switch.js"></script>*@
+    @*<link rel="stylesheet" type="text/css" href="~/Assets/Plugins/glyphicons/css/glyphicons.css" />*@
+    @*<link rel="stylesheet" type="text/css" href="~/Assets/css/Style.css" />*@
+    @*<link rel="stylesheet" type="text/css" href="~/Assets/css/style-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/style-metronic.css" />*@
+    @*<link rel="stylesheet" type="text/css" href="~/Assets/Plugins/glyphicons/css/glyphicons.css" />*@
+
+    @*<script type="text/javascript" src="~/Assets/Plugins/glyphicons/scripts/modernizr.js"></script>*@
+
+    @*@Scripts.Render("~/Content/themes/base/css")*@
+
+   @* <style type="text/css">
+        body {
+            margin-top: 125px; /* adjust this if the height of the menu bar changes */
+        }
+
+        .nav {
+            margin-top: 28px; /* this is a faux center fix for the nav options - adjust this if you wish to change the logo height or the font of the menu items */
+        }
+
+        footer {
+            padding: 30px 0;
+        }
+    </style>*@
+</head>
+<body>
+    <div class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
+                <a class="navbar-brand logo-nav" href="index.php">
+                    <img src="http://placehold.it/150x75&text=Logo" />
+                </a>
+            </div>
+            @Html.Partial("_MenuTop")
+        </div>
+    </nav>
+    </div>
+
+    <div class="container">
+    <div class="page-container">
+        @RenderSection("featured", required: false)
+        
+            @RenderBody()
+        </div>
+        </div>
+        <footer>
+        <hr>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; Company 2013</p>
+            </div>
+        </div>
+    </footer>
+    
+    
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "AjaxForms";
+}
+
+<h2>AjaxForms</h2>
+@section Scripts{
+    <script type="text/javascript">
+        function searchFailed() {
+            $("#searchresults").html("Lo siento hay prroblemas con la busqueda.");
+        }
+    </script>
+}
+
+@using (Ajax.BeginForm("ArtistSearch", "Home",
+                                            new AjaxOptions {
+                                                InsertionMode=InsertionMode.Replace,
+                                                HttpMethod="GET",
+                                                OnFailure="searchFailed",
+                                                LoadingElementId="ajax-loader",
+                                                UpdateTargetId="searchresults",
+                                                }))
+{
+    <input type="text" name="q" />
+    <input type="submit" value="search" />
+    <img id="ajax-loader"src="~/Images/loader.gif" style="display:none" />
+}
+
+<div id="searchresults"></div>

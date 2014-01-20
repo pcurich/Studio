@@ -1,0 +1,75 @@
+﻿@using Studio.Models.Transaccional.Modelo;
+@{
+    ViewBag.Title = "Página principal";
+}
+<script type="text/javascript">
+    //$('#PanelJscroll').jscroll({
+    //    loadingHtml: '<img src="~/Images/loader.gif" alt="Loading" />',
+    //    padding: 20,
+    //    nextSelector: 'a',
+    //    contentSelector: 'li'
+    //});
+    var url = "/Home/TellMeDate";
+    $.get(url, null, function (data) {
+        $("#rData").html(data);
+    });
+</script>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            @*<div id="PanelJscroll" class="navbar navbar-default">
+                @foreach (Album a in (List<Album>)ViewBag.Albums)
+                {
+                    <li>@a.Title</li>
+                }
+                <a href="@Url.Action("Siguiente", "Home", new { Inicio = ViewBag.Inicio, Fin = ViewBag.Fin })">+</a>
+            </div>*@
+            <div id="rData"></div>
+            <p>
+                Enter you name @Html.TextBox("Name")
+                <input type="submit" id="SubmitName" value="Submit"/>
+            </p>
+            <script type="text/jscript">
+                $('#SubmitName').click(function () {
+                    var url = "/Home/WelcomeMsg";
+                    var name = $('#Name').val();
+                    $.get(url, { input: name }, function (data) {
+                        $("#rData").html(data);
+                    });
+                })
+            </script>
+
+            <p>
+                Ingrese el Titulo del Album @Html.TextBox("Album")
+                <input type="submit" id="GetAlbums" value="Submit"/>
+            </p>
+            <script type="text/jscript">
+                $('#GetAlbums').click(function () {
+                    $.getJSON('/Home/AlbumsList/' + $('#Album').val(), function (data) {
+                        var items = '<table><tr><th>Artist</th><th>Title</th><th>Price</th></tr>';
+                        $.each(data, function (i, Album) {
+                            items += "<tr><td>" + Album.Artist.Name + "</td><td>" + Album.Title + "</td><td>" + Album.Price + "</td></tr>";
+                        });
+                        items += "</table>";
+                        $('#rData').html(items);
+                    });
+                })
+            </script>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+
+<div id="dailydeal">
+    @Ajax.ActionLink("Ofertas Especiales",
+                    "DailyDeal",
+                    new AjaxOptions{
+                        UpdateTargetId="dailydeal",
+                        InsertionMode=InsertionMode.Replace,
+                        HttpMethod="GET"
+})
+</div>
+
+
+
+

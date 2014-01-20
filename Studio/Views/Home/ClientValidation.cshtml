@@ -1,0 +1,58 @@
+﻿@model Studio.Models.Transaccional.Modelo.Album
+
+@{
+    ViewBag.Title = "ClientValidation";
+}
+@section Scripts{
+    <script type="text/javascript">
+        $.validator.unobtrusive.adapters.addSingleVal("maxwords", "wordcount");
+        //name of the adapter (ValidationProperty value  you set on the server-side rule, the name of the single parameter to retrieve from metadata
+
+        $.validator.addMethod("maxwords", function (value, element, maxwords) {
+            if (value) {
+                if (value.split(' ').length > maxwords) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+</script>
+
+<script type="text/javascript">
+    //usando JqueryUI
+    $(function () {
+        $("#album-list img").mouseover(function () {
+            $(this).effect("drop", { time: 40, distance: 400 });
+        });
+    });
+    
+</script>
+}  
+
+<h2>ClientValidation</h2>
+
+<form class="form-horizontal" id="subscriptionForm" role="form" action="/Home/About" method="post">
+    <div class="form-group">
+        <div class="col-lg-2 control-label">@Html.LabelFor(model => model.Title)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-2 control-label">@Html.LabelFor(model => model.Price)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.Price)
+            @Html.ValidationMessageFor(model => model.Price)
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-lg-2 control-label">Imagen</div>
+        <div class="col-lg-10" id="album-list">
+            <img src="~/Images/placeholder.gif" alt="imagen" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-default" id="Create">Create</button>
+</form>

@@ -171,6 +171,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Seguridad\Controllers\ComponentesController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\InicioController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\RolesController.cs" />
     <Compile Include="Areas\Seguridad\Controllers\UsuariosController.cs" />
@@ -233,6 +234,11 @@
     <Content Include="Assets\img\logo.png" />
     <Content Include="Assets\img\menu-toggler.png" />
     <Content Include="Assets\Jquery\jquery-1.10.2.js" />
+    <Content Include="Assets\Plugins\Cascade\bootstrap-select.css" />
+    <Content Include="Assets\Plugins\Cascade\bootstrap-select.js" />
+    <Content Include="Assets\Plugins\Cascade\bootstrap-select.min.css" />
+    <Content Include="Assets\Plugins\Cascade\bootstrap-select.min.js" />
+    <Content Include="Assets\Plugins\Cascade\jquery.cascadingdropdown.js" />
     <Content Include="Assets\Plugins\DataTable\css\demo_page.css" />
     <Content Include="Assets\Plugins\DataTable\css\dataTables.css" />
     <Content Include="Assets\Plugins\DataTable\images\back_disabled.jpg" />
@@ -452,6 +458,7 @@
     <Content Include="Assets\Plugins\Jstree\src\themes\default\base.less" />
     <Content Include="Assets\Plugins\Jstree\src\themes\default\style.less" />
     <Content Include="Assets\Plugins\Jstree\test\UNDER_CONTRUCTION" />
+    <Content Include="Areas\Seguridad\Views\Componentes\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />

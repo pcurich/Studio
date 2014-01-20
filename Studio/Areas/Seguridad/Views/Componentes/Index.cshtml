@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="~/Assets/Plugins/Jstree/dist/themes/default/style.min.css" />
+<link rel="stylesheet" type="text/css" href="~/Assets/bootstrap/css/bootstrap-switch.css" />
+<link rel="stylesheet" type="text/css" href="~/Assets/Plugins/Cascade/bootstrap-select.css" />
+
+<script type="text/javascript" src="~/Assets/bootstrap/js/bootstrap-switch.js"></script>
+<script type="text/javascript" src="~/Assets/bootstrap/js/switch.js"></script>
+<script type="text/javascript" src="~/Assets/Plugins/Cascade/bootstrap-select.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+        <h3 class="page-title">Seguridad <small>Usuarios roles y niveles de accesos</small>
+        </h3>
+        <ul class="page-breadcrumb breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="index.html">Home</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="pull-right">
+                <div class="dashboard-date-range tooltips" id="dashboard-report-range" style="display: block;" data-original-title="Change dashboard date range" data-placement="top">
+                    <i class="fa fa-calendar"></i>
+                    <span>@DateTime.Now</span>
+                    <i class="fa fa-angle-down"></i>
+                </div>
+            </li>
+        </ul>
+        <!-- END PAGE TITLE & BREADCRUMB-->
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+        <div class="" id="nestable3">
+        </div>
+    </div>
+    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+        <div class="portlet box purple">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="glyphicons glyphicons-group"></i>Datos del Usuario
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form action="#" class="form-horizontal form-bordered">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <div class="col-md-9">
+                                <div class="row">
+                                        <div id="divApplicaciones" class="form-inline col-lg-12">
+                                            <label class="col-lg-4 control-label">Aplicación</label>
+                                            <div class="col-lg-8">
+                                                <select id="lista_Aplicaciones" class="bootstrap-select btn-primary">
+                                                    <option value="0">-----------------------------------------------</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-inline col-lg-12">
+                                        <label class="col-lg-4 control-label">Area</label>
+                                        <div class="col-lg-8">
+                                            <select id="lista_Areas" class="bootstrap-select btn-primary">
+                                                <option value="0">-----------------------------------------------</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                        <div class="form-inline col-lg-12">
+                                        <label class="col-lg-4 control-label">Controlador</label>
+                                        <div class="col-lg-8">
+                                            <select class="bootstrap-select btn-primary">
+                                                <option value="0">-----------------------------------------------</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                        <div class="form-inline col-lg-12">
+                                        <label class="col-lg-4 control-label">Vista</label>
+                                        <div class="col-lg-8">
+                                            <select class="bootstrap-select btn-primary">
+                                                <option value="0">-----------------------------------------------</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-inline">
+                                        <label class="col-lg-4 control-label">Nombre</label>
+                                        <div class="col-lg-8">
+                                            <input type="text" id="componenteNombre" class="form-control" placeholder="Nombre del Componente" />
+                                        </div>
+                                    </div>
+                                    <div class="form-inline">
+                                        <label class="col-lg-4 control-label">Resumen</label>
+                                        <div class="col-lg-8">
+                                            <textarea id="Resumen" class="form-control" placeholder="Resumen" rows="4" cols="50" ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-inline">
+                                        <label class="col-lg-4 control-label">Active</label>
+                                        <div class="col-lg-8">
+                                            <div class="has-switch" tabindex="0">
+                                                <div class="switch-on" style="">
+                                                    <input id="Cambia" type="checkbox" checked="" class="switch-small" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary pull-right">Entrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Assets/Plugins/Cascade/jquery.cascadingdropdown.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url: '/Seguridad/Componentes/GetAplicaciones',
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            data: "{}",
+            success: function (data) {
+                    for (count = 0; count < data.length; count++) {
+                        $("#lista_Aplicaciones").append("<option value =" + data[count].Id + ">" + data[count].Name + "</option>")
+                    }
+            }
+        });
+    });
+    $("#lista_Aplicaciones").change(function () {
+        console.log($("#lista_Aplicaciones").val());
+        $.ajax({
+            url: '/Seguridad/Componentes/GetAreas',
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            data: { id: $("#lista_Aplicaciones").val() },
+            success: function (data) {
+                for (count = 0; count < data.length; count++) {
+                    $("#lista_Areas").append("<option value =" + data[count].Id + ">" + data[count].Name + "</option>")
+                }
+            }
+        });
+    });
+</script>

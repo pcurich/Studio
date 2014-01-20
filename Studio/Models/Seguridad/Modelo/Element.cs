@@ -9,6 +9,5 @@ namespace Studio.Models.Seguridad.Modelo
     {
         public int RelativeId { get; set; }
         public string Name { get; set; }
-        public bool state { get; set; }
     }
 }

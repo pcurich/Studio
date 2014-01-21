@@ -55,7 +55,7 @@ namespace Studio.Areas.Seguridad.Controllers
         }
 
         [HttpPost]
-        public ActionResult NuevaAplicacion(Element elemento)
+        public ActionResult NuevoElemento(FormCollection form)
         {
             Security sc = new Security();
             return Json(null, JsonRequestBehavior.AllowGet);

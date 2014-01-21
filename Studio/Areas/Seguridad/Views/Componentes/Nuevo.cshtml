@@ -128,9 +128,9 @@
             contentType: "application/json; charset=utf-8",
             data: "{}",
             success: function (data) {
-                    for (count = 0; count < data.length; count++) {
-                        $("#lista_Aplicaciones").append("<option value =" + data[count].Id + ">" + data[count].Name + "</option>")
-                    }
+                for (count = 0; count < data.length; count++) {
+                    $("#lista_Aplicaciones").append("<option value =" + data[count].Id + ">" + data[count].Name + "</option>")
+                }
             }
         });
     });

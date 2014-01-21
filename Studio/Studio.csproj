@@ -178,6 +178,7 @@
     <Compile Include="Areas\Seguridad\Models\Company.cs" />
     <Compile Include="Areas\Seguridad\Models\DataRepository.cs" />
     <Compile Include="Areas\Seguridad\Models\JsUsuarios.cs" />
+    <Compile Include="Areas\Seguridad\Models\ViewElement.cs" />
     <Compile Include="Areas\Seguridad\SeguridadAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -459,6 +460,7 @@
     <Content Include="Assets\Plugins\Jstree\src\themes\default\style.less" />
     <Content Include="Assets\Plugins\Jstree\test\UNDER_CONTRUCTION" />
     <Content Include="Areas\Seguridad\Views\Componentes\Index.cshtml" />
+    <Content Include="Areas\Seguridad\Views\Componentes\Nuevo.cshtml" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />

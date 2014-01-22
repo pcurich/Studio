@@ -3,10 +3,13 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 <link rel="stylesheet" type="text/css" href="~/Assets/Plugins/Jstree/dist/themes/default/style.min.css" />
 <link rel="stylesheet" type="text/css" href="~/Assets/bootstrap/css/bootstrap-switch.css" />
 <link rel="stylesheet" type="text/css" href="~/Assets/Plugins/Cascade/bootstrap-select.css" />
 
+<script type="text/javascript" src="~/Assets/Jquery/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="~/Assets/bootstrap/js/bootstrap-switch.js"></script>
 <script type="text/javascript" src="~/Assets/bootstrap/js/switch.js"></script>
 <script type="text/javascript" src="~/Assets/Plugins/Cascade/bootstrap-select.js"></script>
@@ -58,51 +61,43 @@
                                         <div id="divApplicaciones" class="form-inline col-lg-12">
                                             <label class="col-lg-4 control-label">Aplicación</label>
                                             <div class="col-lg-8">
-                                                <select id="lista_Aplicaciones" class="bootstrap-select btn-primary">
-                                                    <option value="0">-----------------------------------------------</option>
-                                                </select>
+                                                <select id="lista_Aplicaciones" class="bootstrap-select btn-primary"></select>
                                             </div>
                                         </div>
                                         <div class="form-inline col-lg-12">
                                         <label class="col-lg-4 control-label">Area</label>
                                         <div class="col-lg-8">
-                                            <select id="lista_Areas" class="bootstrap-select btn-primary">
-                                                <option value="0">-----------------------------------------------</option>
-                                            </select>
+                                            <select id="lista_Areas" class="bootstrap-select btn-primary"></select>
                                         </div>
                                     </div>
                                         <div class="form-inline col-lg-12">
                                         <label class="col-lg-4 control-label">Controlador</label>
                                         <div class="col-lg-8">
-                                            <select class="bootstrap-select btn-primary">
-                                                <option value="0">-----------------------------------------------</option>
-                                            </select>
+                                            <select id="lista_Controladores" class="bootstrap-select btn-primary"></select>
                                         </div>
                                     </div>
                                         <div class="form-inline col-lg-12">
                                         <label class="col-lg-4 control-label">Vista</label>
                                         <div class="col-lg-8">
-                                            <select id="lista_Vistas" class="bootstrap-select btn-primary">
-                                                <option value="0">-----------------------------------------------</option>
-                                            </select>
+                                            <select id="lista_Vistas" class="bootstrap-select btn-primary"></select>
                                         </div>
                                     </div>
-                                    <div class="form-inline">
+                                    <div class="form-inline col-lg-12">
                                         <label class="col-lg-4 control-label">Nombre</label>
                                         <div class="col-lg-8">
                                             <input type="text" id="Nombre" class="form-control" placeholder="Nombre del Componente" />
                                         </div>
                                     </div>
-                                    <div class="form-inline">
+                                    <div class="form-inline col-lg-12">
                                         <label class="col-lg-4 control-label">Resumen</label>
                                         <div class="col-lg-8">
-                                            <textarea id="Resumen" class="form-control" placeholder="Resumen" rows="4" cols="50" ></textarea>
+                                            <textarea id="Resumen" class="form-control" placeholder="Resumen" rows="4" cols="40" ></textarea>
                                         </div>
                                     </div>
                                     <div class="form-inline">
                                         <label class="col-lg-4 control-label">Active</label>
                                         <div class="col-lg-8">
-                                            <div class="has-switch" tabindex="0">
+                                            <div class="has-switch">
                                                 <div class="switch-on" >
                                                     <input id="Active" type="checkbox" checked="" class="switch-small" />
                                                 </div>
@@ -135,12 +130,11 @@
         });
     });
     $("#lista_Aplicaciones").change(function () {
-        console.log($("#lista_Aplicaciones").val());
         $.ajax({
-            url: '/Seguridad/Componentes/GetAreas',
+            url: '/Seguridad/Componentes/GetElementos',
             type: "GET",
             contentType: "application/json; charset=utf-8",
-            data: { id: $("#lista_Aplicaciones").val() },
+            data: { type:'getAreas',id: $("#lista_Aplicaciones").val() },
             success: function (data) {
                 for (count = 0; count < data.length; count++) {
                     $("#lista_Areas").append("<option value =" + data[count].Id + ">" + data[count].Name + "</option>")
@@ -149,13 +143,48 @@
         });
     });
 
-    $("#nuevoelemento").submit(function (event) {
-        event.preventDefault();
-        var form = $(this);
-        console.log(form);
+    $("#lista_Areas").change(function () {
         $.ajax({
-            url: form.attr("action"),
-            data: { q: form.serialize() },
+            url: '/Seguridad/Componentes/GetElementos',
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            data: { type: 'getControladores', id: $("#lista_Areas").val() },
+            success: function (data) {
+                for (count = 0; count < data.length; count++) {
+                    $("#lista_Controladores").append("<option value =" + data[count].Id + ">" + data[count].Name + "</option>")
+                }
+            }
+        });
+    });
+
+    $("#lista_Controladores").change(function () {
+        $.ajax({
+            url: '/Seguridad/Componentes/GetElementos',
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            data: { type: 'getVistas', id: $("#lista_Controladores").val() },
+            success: function (data) {
+                for (count = 0; count < data.length; count++) {
+                    $("#lista_Vistas").append("<option value =" + data[count].Id + ">" + data[count].Name + "</option>")
+                }
+            }
+        });
+    });
+
+    $("#nuevoelemento").submit(function (event) {
+        console.log($("#lista_Aplicaciones"));
+        $.ajax({
+            url: $(this).attr("action"),
+            type: "POST",
+            data: {
+                Idn1: $("#lista_Aplicaciones").val(),
+                Idn2: $("#lista_Areas").val(),
+                Idn3: $("#lista_Controladores").val(),
+                Idn4: $("#lista_Vistas").val(),
+                Nombre: $("#Nombre").val(),
+                Resumen: $("#Resumen").val(),
+                Active: $("#Active").is(':checked')
+            },
             //beforeSend: function () { $("#ajax-loader").show(); },
             //complete: function () { $("#ajax-loader").hide(); },
             error: function (data) {

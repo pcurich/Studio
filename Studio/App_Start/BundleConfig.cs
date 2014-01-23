@@ -18,7 +18,7 @@ namespace Studio
             //jQuery + CDN           
             bundles.UseCdn = true;
             bundles.Add(new ScriptBundle("~/bundles/jquery",
-                                         "//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.js") //CDN
+                                         "//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.js") //CDN
                                          .Include("~/Scripts/jquery-{version}.js")); //Local
 
 

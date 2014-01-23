@@ -42,11 +42,12 @@ namespace Studio.Areas.Seguridad.Controllers
         }
 
         [HttpPost]
-        public ActionResult NuevoElemento(string Q)
+        public ActionResult NuevoElemento(ViewElement Model)
         {
             Security sc = new Security();
             //http://mvc3only.blogspot.com/2012/04/aspnet-mvc3-ajax-form-submission-simple.html
             //http://www.deliveron.com/blog/post/creating-a-cascading-dropdown-in-aspnet-mvc-3-and-jquery.aspx
+            //http://forums.asp.net/t/1909055.aspx
             return Json(null, JsonRequestBehavior.AllowGet);
         }
 

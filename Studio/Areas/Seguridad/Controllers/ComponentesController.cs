@@ -95,7 +95,7 @@ namespace Studio.Areas.Seguridad.Controllers
             Security sc = new Security();
             List<NestedList> arbol = new List<NestedList>();
 
-            var elementos=sc.Elements.Where(r=>r.RelativeId>0).ToList();
+            var elementos=sc.Elements.Where(r=>r.RelativeId==1).ToList();
             foreach(Element aplicaciones in elementos)
             {
                 NestedList nodoAplicacion = new NestedList();

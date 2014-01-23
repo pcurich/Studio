@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="~/Assets/Plugins/Jstree/dist/themes/default/style.min.css" />
 <link rel="stylesheet" type="text/css" href="~/Assets/bootstrap/css/bootstrap-switch.css" />
 <link rel="stylesheet" type="text/css" href="~/Assets/Plugins/Cascade/bootstrap-select.css" />
+<link rel="stylesheet" type="text/css" href="~/Assets/Plugins/Nested/css/style.css" />
 
 <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 <script type="text/javascript" src="~/Assets/bootstrap/js/bootstrap-switch.js"></script>
@@ -43,18 +44,21 @@
 
 <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-        <div class="" id="nestable">
-
+        <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Arbol de Aplicaciones</h3>
+              </div>
+              <div class="panel-body" id="list5">
+                
+              </div>
         </div>
     </div>
     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-        <div class="portlet box purple">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="glyphicons glyphicons-group"></i>Datos del Usuario
-                </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <i class="glyphicons glyphicons-group"></i><h3 class="panel-title">Registrar Componentes</h3>
             </div>
-            <div class="portlet-body form">
+            <div class="panel-body">
                 @using (Ajax.BeginForm("NuevoElemento", "Componentes", 
                     new AjaxOptions{
                         InsertionMode = InsertionMode.Replace,
@@ -73,37 +77,37 @@
                                                 @Html.LabelFor(m => m.Aplicacion)
                                             </label>
                                             <div class="col-lg-8">
-                                                @Html.DropDownListFor(m => m.Aplicacion,(SelectList)ViewBag.Aplicacion,new {@class="bootstrap-select btn-primary"})
+                                                @Html.DropDownListFor(m => m.Aplicacion,(SelectList)ViewBag.Aplicacion,new {@class="bootstrap-select"})
                                             </div>
                                         </div>
                                         <div class="form-inline col-lg-12">
                                         <label class="col-lg-4 control-label">@Html.LabelFor(m => m.Area)</label>
                                         <div class="col-lg-8">
-                                            @Html.DropDownListFor(m => m.Area,(SelectList)ViewBag.Area,new {@class="bootstrap-select btn-primary"})
+                                            @Html.DropDownListFor(m => m.Area,(SelectList)ViewBag.Area,new {@class="bootstrap-select"})
                                         </div>
                                     </div>
                                         <div class="form-inline col-lg-12">
                                         <label class="col-lg-4 control-label">@Html.LabelFor(m => m.Controller)</label>
                                         <div class="col-lg-8">
-                                            @Html.DropDownListFor(m => m.Controller,(SelectList)ViewBag.Controller,new {@class="bootstrap-select btn-primary"})
+                                            @Html.DropDownListFor(m => m.Controller,(SelectList)ViewBag.Controller,new {@class="bootstrap-select"})
                                         </div>
                                     </div>
                                         <div class="form-inline col-lg-12">
                                         <label class="col-lg-4 control-label">@Html.LabelFor(m => m.Vista)</label>
                                         <div class="col-lg-8">
-                                            @Html.DropDownListFor(m => m.Vista,(SelectList)ViewBag.Vista,new {@class="bootstrap-select btn-primary"})
+                                            @Html.DropDownListFor(m => m.Vista,(SelectList)ViewBag.Vista,new {@class="bootstrap-select"})
                                         </div>
                                     </div>
                                     <div class="form-inline col-lg-12">
                                         <label class="col-lg-4 control-label">@Html.LabelFor(m => m.Nombre)</label>
                                         <div class="col-lg-8">
-                                            @Html.TextBoxFor(m => m.Nombre,new {placeholder="Nombre",@class="bootstrap-select btn-primary"})
+                                            @Html.TextBoxFor(m => m.Nombre,new {placeholder="Nombre",@class="bootstrap-select"})
                                         </div>
                                     </div>
                                     <div class="form-inline col-lg-12">
                                         <label class="col-lg-4 control-label">@Html.LabelFor(m => m.Resumen)</label>
                                         <div class="col-lg-8">
-                                            @Html.TextAreaFor(m => m.Resumen,new {placeholder="Resumen",rows="4" ,cols="40" ,@class="bootstrap-select btn-primary"})
+                                            @Html.TextAreaFor(m => m.Resumen,new {placeholder="Resumen",rows="4" ,cols="40" ,@class="bootstrap-select"})
                                         </div>
                                     </div>
                                     <div class="form-inline">
@@ -116,26 +120,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @*<div class="form-inline">
-                                        <label class="col-lg-4 control-label">Tipo</label>
-                                        <div class="col-lg-8">
-                                            <div class="has-switch">
-                                                <div class="switch-on" >
-                                                    <div class="form-group">
-                                                      <input id="option1" type="radio" name="radio1" class="switch-mini" value="option1" data-text-label="Aplicacion"/>
-                                                      <input id="option2" type="radio" name="radio1" class="switch-mini" value="option2" data-text-label="Area"/>
-                                                      <input id="option3" type="radio" name="radio1" class="switch-mini" value="option3" data-text-label="Controlador"/>
-                                                      <input id="option4" type="radio" name="radio1" class="switch-mini" value="option3" data-text-label="Vista"/>
-                                                        <script type="text/javascript">
-                                                            $('.radio2').on('switch-change', function () {
-                                                                $('.radio2').bootstrapSwitch('toggleRadioStateAllowUncheck', true);
-                                                            });
-                                                        </script>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>*@
                                 </div>
                                 <input type="submit" class="btn btn-primary pull-right" value="Entrar" />
                                 <img id="ajax-loader" src="~/Images/loader.gif" style="display:none"/>
@@ -173,45 +157,49 @@
             contentType: "application/json; charset=utf-8",
             data: "{}",
             success: function (data) {
-                $("#nestable").empty();
+                $("#list5").empty();
                 var str = "";
-                for (count = 0; count < data.length; count++) {
-                    str += "<ul>";
-                    str += "<li>" + data[count].ul + "</li>";//Aplicaciones
-                    if (data[count].children.length > 0) {
-                        var dataArea = data[count].children;
-                        for (count = 0; count < dataArea.length; count++) {
-                            str += "<ul>";
-                            str += "<li>" + dataArea[count].ul + "</li>";//Area
-                            if (dataArea[count].children.length > 0) {
-                                var dataController = dataArea[count].children;
-                                for (count = 0; count < dataController.length; count++) {
-                                    str += "<ul>";
-                                    str += "<li>" + dataController[count].ul + "</li>";//Controller
-                                    if (dataController[count].children.length > 0) {
-                                        var dataVista = datadataController[count].children;
-                                        for (count = 0; count < dataVista.length; count++) {
-                                            str += "<ul>";
-                                            str += "<li>" + dataVista[count].ul + "</li>";//Controller
-                                            if (dataVista[count].children.length > 0) {
-                                                var dataElement = dataVista[count].children;
-                                                for (count = 0; count < dataElement.length; count++) {
-                                                    str += "<li>" + dataElement[count].ul + "</li>";//Controller
+                str += "<ol>";
+                for (count0 = 0; count0 < data.length; count0++) {
+                    str += "<li>" + data[count0].ul;//Aplicaciones
+                    if (data[count0].children.length > 0) {
+                        var dataArea = data[count0].children;
+                        str += "<ol>";
+                        for (count1 = 0; count1 < dataArea.length; count1++) {
+                            str += "<li>" + dataArea[count1].ul;//Area
+                            if (dataArea[count1].children.length > 0) {
+                                var dataController = dataArea[count1].children;
+                                str += "<ol>";
+                                for (count2 = 0; count2 < dataController.length; count2++) {
+                                    str += "<li>" + dataController[count2].ul;//Controller
+                                    if (dataController[count2].children.length > 0) {
+                                        var dataVista = datadataController[count2].children;
+                                        str += "<ol>";
+                                        for (count3 = 0; count3 < dataVista.length; count3++) {
+                                            str += "<li>" + dataVista[count3].ul;//Controller
+                                            if (dataVista[count3].children.length > 0) {
+                                                var dataElement = dataVista[count3].children;
+                                                for (count4 = 0; count4 < dataElement.length; count4++) {
+                                                    str += "<li>" + dataElement[count4].ul + "</li>";//Controller
                                                 }
                                             }
-                                            str += "</ul>";
+                                            str += "</li>";
                                         }
+                                        str += "</ol>";
                                     }
-                                    str += "</ul>";
+                                    str += "</li>";
                                 }
+                                str += "</ol>";
                             }
-                            str += "</ul>";
+                            str += "</li>";
                         }
+                        str += "</ol>";
                     }
-                    str += "</ul>";
+                    str += "</li>";
                 }
+                str += "</ol>";
                 console.log(str);
-                $("#nestable").append(str);
+                $("#list5").append(str);
             }
         });
     });
@@ -286,3 +274,4 @@
     //    });
     //});
 </script>
+http://bootswatch.com/

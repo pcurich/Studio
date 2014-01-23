@@ -337,6 +337,11 @@
     <Content Include="Assets\Plugins\Jstree\test\libs\qunit.css" />
     <Content Include="Assets\Plugins\Jstree\test\libs\qunit.js" />
     <Content Include="Assets\Plugins\Jstree\test\test.js" />
+    <Content Include="Assets\Plugins\Nested\css\style.css" />
+    <Content Include="Assets\Plugins\Nested\images\arrow.png" />
+    <Content Include="Assets\Plugins\Nested\images\bg.png" />
+    <Content Include="Assets\Plugins\Nested\images\hover.png" />
+    <Content Include="Assets\Plugins\Nested\images\nested.png" />
     <Content Include="Assets\Plugins\switch\bootstrap-theme.css" />
     <Content Include="Assets\Plugins\switch\bootstrap-theme.min.css" />
     <Content Include="Assets\Plugins\switch\bootstrap.css" />
@@ -463,6 +468,7 @@
     <Content Include="Assets\Plugins\Jstree\test\UNDER_CONTRUCTION" />
     <Content Include="Areas\Seguridad\Views\Componentes\Index.cshtml" />
     <Content Include="Areas\Seguridad\Views\Componentes\Nuevo.cshtml" />
+    <Content Include="Assets\Plugins\Nested\images\.DS_Store" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

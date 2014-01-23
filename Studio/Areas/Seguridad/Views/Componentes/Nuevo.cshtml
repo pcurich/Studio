@@ -1,4 +1,5 @@
 ﻿@model Studio.Areas.Seguridad.Models.ViewElement
+@using Studio.Areas.Seguridad.Models
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,7 +13,7 @@
 <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 <script type="text/javascript" src="~/Assets/bootstrap/js/bootstrap-switch.js"></script>
 <script type="text/javascript" src="~/Assets/bootstrap/js/switch.js"></script>
-<script type="text/javascript" src="~/Assets/Plugins/Cascade/bootstrap-select.js"></script>
+@*<script type="text/javascript" src="~/Assets/Plugins/Cascade/bootstrap-select.js"></script>*@
 
 <div class="row">
     <div class="col-md-12">
@@ -42,7 +43,8 @@
 
 <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-        <div class="" id="nestable3">
+        <div class="" id="nestable">
+
         </div>
     </div>
     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
@@ -57,9 +59,8 @@
                     new AjaxOptions{
                         InsertionMode = InsertionMode.Replace,
                         HttpMethod = "POST",
-                        OnFailure = "searchFailed",
-                        LoadingElementId = "ajax-loader",
-                        UpdateTargetId = "searchresults",
+                        //LoadingElementId = "ajax-loader",
+                        UpdateTargetId = "result",
                     },
                     new {@class="form-horizontal form-bordered" }))
                 {
@@ -72,25 +73,25 @@
                                                 @Html.LabelFor(m => m.Aplicacion)
                                             </label>
                                             <div class="col-lg-8">
-                                                @Html.DropDownListFor(m => m.Aplicacion, Model.Aplicacion,new {@class="bootstrap-select btn-primary"})
+                                                @Html.DropDownListFor(m => m.Aplicacion,(SelectList)ViewBag.Aplicacion,new {@class="bootstrap-select btn-primary"})
                                             </div>
                                         </div>
                                         <div class="form-inline col-lg-12">
                                         <label class="col-lg-4 control-label">@Html.LabelFor(m => m.Area)</label>
                                         <div class="col-lg-8">
-                                            @Html.DropDownListFor(m => m.Area, Model.Area,new {@class="bootstrap-select btn-primary"})
+                                            @Html.DropDownListFor(m => m.Area,(SelectList)ViewBag.Area,new {@class="bootstrap-select btn-primary"})
                                         </div>
                                     </div>
                                         <div class="form-inline col-lg-12">
                                         <label class="col-lg-4 control-label">@Html.LabelFor(m => m.Controller)</label>
                                         <div class="col-lg-8">
-                                            @Html.DropDownListFor(m => m.Controller, Model.Controller,new {@class="bootstrap-select btn-primary"})
+                                            @Html.DropDownListFor(m => m.Controller,(SelectList)ViewBag.Controller,new {@class="bootstrap-select btn-primary"})
                                         </div>
                                     </div>
                                         <div class="form-inline col-lg-12">
                                         <label class="col-lg-4 control-label">@Html.LabelFor(m => m.Vista)</label>
                                         <div class="col-lg-8">
-                                            @Html.DropDownListFor(m => m.Aplicacion, Model.Vista,new {@class="bootstrap-select btn-primary"})
+                                            @Html.DropDownListFor(m => m.Vista,(SelectList)ViewBag.Vista,new {@class="bootstrap-select btn-primary"})
                                         </div>
                                     </div>
                                     <div class="form-inline col-lg-12">
@@ -115,6 +116,26 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @*<div class="form-inline">
+                                        <label class="col-lg-4 control-label">Tipo</label>
+                                        <div class="col-lg-8">
+                                            <div class="has-switch">
+                                                <div class="switch-on" >
+                                                    <div class="form-group">
+                                                      <input id="option1" type="radio" name="radio1" class="switch-mini" value="option1" data-text-label="Aplicacion"/>
+                                                      <input id="option2" type="radio" name="radio1" class="switch-mini" value="option2" data-text-label="Area"/>
+                                                      <input id="option3" type="radio" name="radio1" class="switch-mini" value="option3" data-text-label="Controlador"/>
+                                                      <input id="option4" type="radio" name="radio1" class="switch-mini" value="option3" data-text-label="Vista"/>
+                                                        <script type="text/javascript">
+                                                            $('.radio2').on('switch-change', function () {
+                                                                $('.radio2').bootstrapSwitch('toggleRadioStateAllowUncheck', true);
+                                                            });
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
                                 </div>
                                 <input type="submit" class="btn btn-primary pull-right" value="Entrar" />
                                 <img id="ajax-loader" src="~/Images/loader.gif" style="display:none"/>
@@ -126,7 +147,7 @@
         </div>
     </div>
 </div>
-<div id="searchresults"></div>
+<div id="result"></div>
 
 <script type="text/javascript" src="~/Assets/Plugins/Cascade/jquery.cascadingdropdown.js"></script>
 <script type="text/javascript">
@@ -137,9 +158,60 @@
             contentType: "application/json; charset=utf-8",
             data: "{}",
             success: function (data) {
+                $("#Aplicacion").empty();
                 for (count = 0; count < data.length; count++) {
                     $("#Aplicacion").append("<option value =" + data[count].Id + ">" + data[count].Name + "</option>")
                 }
+            }
+        });
+    });
+  
+    $(document).ready(function () {
+        $.ajax({
+            url: '/Seguridad/Componentes/GetNestedList',
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            data: "{}",
+            success: function (data) {
+                $("#nestable").empty();
+                var str = "";
+                for (count = 0; count < data.length; count++) {
+                    str += "<ul>";
+                    str += "<li>" + data[count].ul + "</li>";//Aplicaciones
+                    if (data[count].children.length > 0) {
+                        var dataArea = data[count].children;
+                        for (count = 0; count < dataArea.length; count++) {
+                            str += "<ul>";
+                            str += "<li>" + dataArea[count].ul + "</li>";//Area
+                            if (dataArea[count].children.length > 0) {
+                                var dataController = dataArea[count].children;
+                                for (count = 0; count < dataController.length; count++) {
+                                    str += "<ul>";
+                                    str += "<li>" + dataController[count].ul + "</li>";//Controller
+                                    if (dataController[count].children.length > 0) {
+                                        var dataVista = datadataController[count].children;
+                                        for (count = 0; count < dataVista.length; count++) {
+                                            str += "<ul>";
+                                            str += "<li>" + dataVista[count].ul + "</li>";//Controller
+                                            if (dataVista[count].children.length > 0) {
+                                                var dataElement = dataVista[count].children;
+                                                for (count = 0; count < dataElement.length; count++) {
+                                                    str += "<li>" + dataElement[count].ul + "</li>";//Controller
+                                                }
+                                            }
+                                            str += "</ul>";
+                                        }
+                                    }
+                                    str += "</ul>";
+                                }
+                            }
+                            str += "</ul>";
+                        }
+                    }
+                    str += "</ul>";
+                }
+                console.log(str);
+                $("#nestable").append(str);
             }
         });
     });
@@ -150,6 +222,7 @@
             contentType: "application/json; charset=utf-8",
             data: { type:'getAreas',id: $("#Aplicacion").val() },
             success: function (data) {
+                $("#Area").empty();
                 for (count = 0; count < data.length; count++) {
                     $("#Area").append("<option value =" + data[count].Id + ">" + data[count].Name + "</option>")
                 }
@@ -164,20 +237,22 @@
             contentType: "application/json; charset=utf-8",
             data: { type: 'getControladores', id: $("#Area").val() },
             success: function (data) {
+                $("#Controller").empty();
                 for (count = 0; count < data.length; count++) {
-                    $("#Controlador").append("<option value =" + data[count].Id + ">" + data[count].Name + "</option>")
+                    $("#Controller").append("<option value =" + data[count].Id + ">" + data[count].Name + "</option>")
                 }
             }
         });
     });
 
-    $("#Controlador").change(function () {
+    $("#Controller").change(function () {
         $.ajax({
             url: '/Seguridad/Componentes/GetElementos',
             type: "GET",
             contentType: "application/json; charset=utf-8",
             data: { type: 'getVistas', id: $("#Controlador").val() },
             success: function (data) {
+                $("#Vista").empty();
                 for (count = 0; count < data.length; count++) {
                     $("#Vista").append("<option value =" + data[count].Id + ">" + data[count].Name + "</option>")
                 }

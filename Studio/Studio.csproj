@@ -177,7 +177,9 @@
     <Compile Include="Areas\Seguridad\Controllers\UsuariosController.cs" />
     <Compile Include="Areas\Seguridad\Models\Company.cs" />
     <Compile Include="Areas\Seguridad\Models\DataRepository.cs" />
+    <Compile Include="Areas\Seguridad\Models\JsTree.cs" />
     <Compile Include="Areas\Seguridad\Models\JsUsuarios.cs" />
+    <Compile Include="Areas\Seguridad\Models\NestedList.cs" />
     <Compile Include="Areas\Seguridad\Models\ViewElement.cs" />
     <Compile Include="Areas\Seguridad\SeguridadAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />

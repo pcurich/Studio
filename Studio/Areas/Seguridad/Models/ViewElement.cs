@@ -1,23 +1,22 @@
-﻿using Studio.Models.Seguridad.Modelo;
+﻿using System;
 using System.ComponentModel;
-using System.Linq;
-using System.Web.Mvc;
 
 namespace Studio.Areas.Seguridad.Models
 {
+    [Serializable]
     public class ViewElement
     {
         [DisplayName("Aplicacion")]
-        public SelectList Aplicacion { get; set; }
+        public int Aplicacion { get; set; }
 
         [DisplayName("Area")]
-        public SelectList Area { get; set; }
+        public int Area { get; set; }
 
         [DisplayName("Controlador")]
-        public SelectList Controller { get; set; }
+        public int Controller { get; set; }
 
         [DisplayName("Vista")]
-        public SelectList Vista { get; set; }
+        public int Vista { get; set; }
 
         [DisplayName("Nombre")]
         public string Nombre { get; set; }
@@ -30,10 +29,10 @@ namespace Studio.Areas.Seguridad.Models
 
         public ViewElement()
         {
-            Aplicacion = new SelectList(Enumerable.Empty<Element>(), "Id", "Name");
-            Area = new SelectList(Enumerable.Empty<Element>(), "Id", "Name");
-            Controller = new SelectList(Enumerable.Empty<Element>(), "Id", "Name");
-            Vista = new SelectList(Enumerable.Empty<Element>(), "Id", "Name");
+            //Aplicacion = new SelectList(Enumerable.Empty<Element>(), "Id", "Name");
+            //Area = new SelectList(Enumerable.Empty<Element>(), "Id", "Name");
+            //Controller = new SelectList(Enumerable.Empty<Element>(), "Id", "Name");
+            //Vista = new SelectList(Enumerable.Empty<Element>(), "Id", "Name");
         }
     }
 }

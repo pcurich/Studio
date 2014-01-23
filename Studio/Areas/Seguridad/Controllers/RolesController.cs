@@ -148,33 +148,6 @@ namespace Studio.Areas.Seguridad.Controllers
         }
     }
 
-    public class JsTree
-    {
-        public string id { get; set; }
-
-        public string text { get; set; }
-
-        public string icon { get; set; }
-
-        public State state { get; set; }
-
-        public string[] children { get; set; }
-
-        public JsTree(int i)
-        {
-            children = new string[i];
-        }
-    }
-
-    public class State
-    {
-        public bool opened { get; set; }
-
-        public bool disabled { get; set; }
-
-        public bool selected { get; set; }
-    }
-
     public class JQueryDataTableParamModel
     {
         /* The integer value that is used by DataTables for synchronization purpose. On each call sent to the server-side page,

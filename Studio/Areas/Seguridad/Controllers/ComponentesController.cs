@@ -1,4 +1,5 @@
-﻿using Studio.Models.Seguridad.Entities;
+﻿using Studio.Areas.Seguridad.Models;
+using Studio.Models.Seguridad.Entities;
 using Studio.Models.Seguridad.Modelo;
 using System;
 using System.Collections.Generic;
@@ -41,15 +42,24 @@ namespace Studio.Areas.Seguridad.Controllers
         }
 
         [HttpPost]
-        public ActionResult NuevoElemento(string Idn1, string Idn2, string Idn3, string Idn4, string Nombre, string Resumen, string Active)
+        public ActionResult NuevoElemento(string Q)
         {
             Security sc = new Security();
+            //http://mvc3only.blogspot.com/2012/04/aspnet-mvc3-ajax-form-submission-simple.html
+            //http://www.deliveron.com/blog/post/creating-a-cascading-dropdown-in-aspnet-mvc-3-and-jquery.aspx
             return Json(null, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Nuevo()
         {
-            return View();
+            Security sc = new Security();
+            var model = new ViewElement();
+            Element padre = sc.Elements.Where(n => n.Name == "Aplicacion").FirstOrDefault();
+            List<Element> json = new List<Element>();
+            json.Add(new Element { Id = 0, Name = "" });
+            json.AddRange(sc.Elements.Where(p => p.RelativeId == padre.Id).ToList());
+            model.Aplicacion = new SelectList(json, "Id", "Name");
+            return View(model);
         }
 
     }

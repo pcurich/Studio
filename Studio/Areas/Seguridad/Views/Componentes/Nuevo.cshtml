@@ -173,15 +173,17 @@
                                 for (count2 = 0; count2 < dataController.length; count2++) {
                                     str += "<li>" + dataController[count2].ul;//Controller
                                     if (dataController[count2].children.length > 0) {
-                                        var dataVista = datadataController[count2].children;
+                                        var dataVista = dataController[count2].children;
                                         str += "<ol>";
                                         for (count3 = 0; count3 < dataVista.length; count3++) {
                                             str += "<li>" + dataVista[count3].ul;//Controller
                                             if (dataVista[count3].children.length > 0) {
                                                 var dataElement = dataVista[count3].children;
+                                                str += "<ol>";
                                                 for (count4 = 0; count4 < dataElement.length; count4++) {
                                                     str += "<li>" + dataElement[count4].ul + "</li>";//Controller
                                                 }
+                                                str += "</ol>";
                                             }
                                             str += "</li>";
                                         }
@@ -238,7 +240,7 @@
             url: '/Seguridad/Componentes/GetElementos',
             type: "GET",
             contentType: "application/json; charset=utf-8",
-            data: { type: 'getVistas', id: $("#Controlador").val() },
+            data: { type: 'getVistas', id: $("#Controller").val() },
             success: function (data) {
                 $("#Vista").empty();
                 for (count = 0; count < data.length; count++) {

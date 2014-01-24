@@ -50,6 +50,7 @@ namespace Studio.Areas.Seguridad.Controllers
             //http://forums.asp.net/t/1909055.aspx
             Element nuevo = new Element();
             nuevo.Name = Model.Nombre;
+            nuevo.Resumen = Model.Resumen;
             nuevo.UsuarioCreacion = "system"; ;//User.Identity.Name;
             nuevo.UsuarioModificacion = "system";
             nuevo.FechaCreacion = DateTime.Now;
@@ -117,7 +118,7 @@ namespace Studio.Areas.Seguridad.Controllers
                         var elementocontrollers=sc.Elements.Where(e=>e.RelativeId==controllers.Id).ToList();
                         List<NestedList> ArbolVistas = new List<NestedList>();
 
-                        foreach(Element vistas in elementoAreas )
+                        foreach (Element vistas in elementocontrollers)
                         {
                             NestedList nodoVista = new NestedList();
                             nodoVista.ul = vistas.Name;

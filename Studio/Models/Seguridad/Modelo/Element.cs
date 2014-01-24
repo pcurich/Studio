@@ -9,5 +9,6 @@ namespace Studio.Models.Seguridad.Modelo
     {
         public int RelativeId { get; set; }
         public string Name { get; set; }
+        public string Resumen { get; set; }
     }
 }
